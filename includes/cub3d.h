@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_print_char.c                                    :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tdausque <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/25 09:31:36 by tdausque          #+#    #+#             */
-/*   Updated: 2024/10/27 12:50:38 by tdausque         ###   ########.fr       */
+/*   Created: 2025/04/14 09:40:11 by tdausque          #+#    #+#             */
+/*   Updated: 2025/04/14 09:41:52 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#ifndef CUB3D_H
+# define CUB3D_H
 
-int	ft_print_char(char c)
-{
-	write(1, &c, 1);
-	return (1);
-}
+# include <stdio.h>
+# include <stdlib.h>
+
+
+
+#endif
