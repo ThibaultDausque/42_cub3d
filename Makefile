@@ -6,7 +6,7 @@
 #    By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 11:32:53 by tdausque          #+#    #+#              #
-#    Updated: 2025/04/15 14:01:48 by tdausque         ###   ########.fr        #
+#    Updated: 2025/04/15 16:30:46 by tdausque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,8 @@ SRCS = $(PARSE_SRC) $(UTILS_SRC)
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 CFLAGS = -Wall -Wextra -Werror -g
-INCLUDES = -Iincludes -Iblibft/includes
-LIB = blibft/big_lib.a
+INCLUDES = -Iincludes -Ib_libft/includes
+LIB = b_libft/big_lib.a
 RM = rm -f
 
 BAR_LENGTH := 50
@@ -49,7 +49,7 @@ $(NAME) : $(OBJS)
 $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	$(call progress_bar)
-	@cd blibft && make -s
+	@cd b_libft && make -s
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean :
@@ -58,7 +58,7 @@ clean :
 
 fclean :	clean
 	@rm -f $(NAME)
-	@cd blibft && make fclean
+	@cd b_libft && make fclean
 	@$(RM) $(NAME)
 
 re : fclean all
