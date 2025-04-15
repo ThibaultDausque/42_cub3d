@@ -6,14 +6,15 @@
 #    By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 11:32:53 by tdausque          #+#    #+#              #
-#    Updated: 2025/04/15 12:52:12 by tdausque         ###   ########.fr        #
+#    Updated: 2025/04/15 14:01:48 by tdausque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 PARSE_SRC = src/parsing/parse.c \
-		src/parsing/extension.c
+		src/parsing/extension.c \
+		src/parsing/flood_fill.c
 
 UTILS_SRC = src/utils/utils.c
 

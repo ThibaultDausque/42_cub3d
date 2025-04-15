@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:40:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/15 12:56:25 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/15 15:44:39 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,22 @@
 # include "libft.h"
 # include "get_next_line.h"
 
+typedef struct t_map
+{
+	char	**tab;
+	char	*filename;
+	int		width;
+	int		height;
+} s_map;
 
 //////PARSING//////
-int	count_map_line(char *filename);
-int	cub_ext(char *filename);
+int		count_map_line(char *filename);
+int		cub_ext(char *filename);
+void	flood_fill(s_map *map, int x, int y);
 
 //////UTILS//////
 int	ft_strcmp(const char *s1, const char *s2);
+int	max_width(char **map);
+int	max_height(char **map);
 
 #endif
