@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   extension.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 09:40:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/15 12:56:25 by tdausque         ###   ########.fr       */
+/*   Created: 2025/04/15 12:40:42 by tdausque          #+#    #+#             */
+/*   Updated: 2025/04/15 13:00:08 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "cub3d.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "libft.h"
-# include "get_next_line.h"
+int	cub_ext(char *filename)
+{
+	int		i;
 
-
-//////PARSING//////
-int	count_map_line(char *filename);
-int	cub_ext(char *filename);
-
-//////UTILS//////
-int	ft_strcmp(const char *s1, const char *s2);
-
-#endif
+	i = 0;
+	while (filename[i])
+	{
+		if (filename[i] == '.')
+			break ;
+		i++;
+	}
+	if (filename[i] == '\0')
+		return (0);
+	if (ft_strcmp(filename + i, ".cub") == 0)
+		return (1);
+	return (0);
+}

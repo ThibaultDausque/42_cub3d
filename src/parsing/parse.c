@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:40:57 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/15 11:25:37 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/15 13:58:20 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,42 @@ char	**map_tab(char *filename)
 	return (tab);
 }
 
-int	map_is_enclosed(char **map)
+int	map_is_enclosed(char **map, char *filename)
 {
 	int		i;
 	int		j;
+	int		map_len;
 
+	map_len = count_map_line(filename) - 8;
 	j = 0;
-	while (map[0][j] == '1')
+	while (map[0][j] && map[0][j] != '\n')
 	{
 		if (map[0][j] != '1')
+			return (0);
 		j++;
 	}
-	while (map[i])
+	i = 1;
+	while (map[i][j] && i < map_len - 1)
 	{
-		printf("%s", map[i]);
+		j = 0;
+		while (map[i][j] != '\n' && map[i][j])
+		{
+			if (map[i][0] != '1')
+				return (0);
+			j++;
+		}
+		if (map[i][j - 1] != '1')
+			return (0);
 		i++;
 	}
-	return (0);
+	j = 0;
+	while (map[i][j] && map[i][j] != '\n')
+	{
+		if (map[i][j] == '0')
+			return (0);
+		j++;
+	}
+	return (1);
 }
 
 int	main(void)
@@ -96,5 +115,15 @@ int	main(void)
 	i = 0;
 	while (tab[i])
 		printf("%s", tab[i++]);
+	printf("\nIs the map enclosed ?\n");
+	if (!map_is_enclosed(tab, filename))
+		printf("error: absolutely not.\n");
+	else
+		printf("Yeah that's okay.");
+	printf("\nIs the good extension ?\n");
+	if (!cub_ext(filename))
+		printf("error: absolutely not.\n");
+	else
+		printf("Yeah that's okay.");
 	return (0);
 }

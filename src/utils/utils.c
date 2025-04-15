@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/14 09:40:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/15 12:56:25 by tdausque         ###   ########.fr       */
+/*   Created: 2025/04/15 12:51:34 by tdausque          #+#    #+#             */
+/*   Updated: 2025/04/15 12:53:47 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "cub3d.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include "libft.h"
-# include "get_next_line.h"
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	int		i;
 
-
-//////PARSING//////
-int	count_map_line(char *filename);
-int	cub_ext(char *filename);
-
-//////UTILS//////
-int	ft_strcmp(const char *s1, const char *s2);
-
-#endif
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] && s2[i])
+		i++;
+	return (s1[i] - s2[i]);
+}

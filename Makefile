@@ -6,14 +6,18 @@
 #    By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 11:32:53 by tdausque          #+#    #+#              #
-#    Updated: 2025/04/15 11:44:52 by tdausque         ###   ########.fr        #
+#    Updated: 2025/04/15 12:52:12 by tdausque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
-PARSE_SRC = src/parsing/parse.c
-SRCS = $(PARSE_SRC)
+PARSE_SRC = src/parsing/parse.c \
+		src/parsing/extension.c
+
+UTILS_SRC = src/utils/utils.c
+
+SRCS = $(PARSE_SRC) $(UTILS_SRC)
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 CFLAGS = -Wall -Wextra -Werror -g
