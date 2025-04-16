@@ -20,7 +20,11 @@ PARSE_SRC = src/parsing/parse.c \
 
 UTILS_SRC = src/utils/utils.c
 
-SRCS = $(PARSE_SRC) $(UTILS_SRC) $(MAIN_SRC)
+RAYCAST_SRC = 	create.c \
+				free.c \
+				raycasting.c
+
+SRCS = $(PARSE_SRC) $(UTILS_SRC) $(MAIN_SRC) $(RAYCAST_SRC)
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 CFLAGS = -Wall -Wextra -Werror -g

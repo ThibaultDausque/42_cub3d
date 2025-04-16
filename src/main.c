@@ -12,14 +12,14 @@
 
 #include "cub3d.h"
 
-int	main(int ac, char **av)
+/*int	main(int ac, char **av)
 {
-	s_map	*map;
+	t_map	*map;
 	char	**tab;
 	int		i;
 	(void) ac;
 
-	map = (s_map *)malloc(sizeof(s_map));
+	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
 		return (0);
 	map->filename = av[1];
@@ -41,5 +41,49 @@ int	main(int ac, char **av)
 		printf("Yeah that's okay.\n");
 	flood_fill(map, 10, 2);
 	free(map);
+	return (0);
+}*/
+
+int	ft_close(int keycode, t_data *data);
+int	ft_redcross(t_data *data);
+
+int	main(int ac, char **av)
+{
+	int fd;
+	t_data	data;
+
+	(void)ac;
+	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+	{
+		ft_printf("Error : couldn't open the file\n");
+		return (0);
+	}
+	create_data(&data, fd);
+	data.mlx = mlx_init();
+	if (data.mlx == NULL)
+	{
+		ft_printf("Error : mlx_init failure\n");
+		ft_free_tab(data.map);
+		return (0);
+	}
+	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3d");
+	mlx_hook(data.win, 17, 1L << 2, ft_redcross, &data);
+	mlx_hook(data.win, 2, 1L << 0, ft_close, &data);
+	raycasting(&data);
+	mlx_loop(data.mlx);
+	ft_free_all(&data);
+}
+
+int	ft_close(int keycode, t_data *data)
+{
+	if (keycode == 65307)
+		mlx_loop_end(data->mlx);
+	return (0);
+}
+
+int	ft_redcross(t_data *data)
+{
+	mlx_loop_end(data->mlx);
 	return (0);
 }

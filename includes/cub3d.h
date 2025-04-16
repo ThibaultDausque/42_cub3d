@@ -20,18 +20,54 @@
 # include "libft.h"
 # include "get_next_line.h"
 
-typedef struct t_map
+# define PIXEL 64
+# define WIDTH 320
+# define HEIGHT 200
+
+typedef struct s_map
 {
 	char	**tab;
 	char	*filename;
 	int		width;
 	int		height;
-} s_map;
+} t_map;
+
+
+typedef struct s_player
+{
+	float	x;
+	float	y;
+} t_player;
+
+typedef struct s_ray
+{
+	float	x;
+	float	y;
+	float	dirX;
+	float	dirY;
+} t_ray;
+
+typedef struct s_data
+{
+	void		*mlx;
+	void		*win;
+	t_map		map;
+	t_player	player;
+	t_ray		ray;
+} t_data;
+
+typedef struct	s_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+} t_img;
 
 //////PARSING//////
 int		count_map_line(char *filename);
 int		cub_ext(char *filename);
-void	flood_fill(s_map *map, int x, int y);
+void	flood_fill(t_map *map, int x, int y);
 char	**map_tab(char *filename);
 
 //////UTILS//////
