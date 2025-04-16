@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:40:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/15 15:44:39 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/16 09:52:26 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct t_map
 int		count_map_line(char *filename);
 int		cub_ext(char *filename);
 void	flood_fill(s_map *map, int x, int y);
+char	**map_tab(char *filename);
 
 //////UTILS//////
 int	ft_strcmp(const char *s1, const char *s2);

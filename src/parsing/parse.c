@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 10:40:57 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/15 16:05:56 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/16 09:48:26 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,36 +63,4 @@ char	**map_tab(char *filename)
 	}
 	tab[i] = NULL;
 	return (tab);
-}
-
-
-int	main(void)
-{
-	char	*filename = "maps/test.cub";
-	s_map	*map;
-	char	**tab;
-	int		i;
-
-	map = (s_map *)malloc(sizeof(s_map));
-	if (!map)
-		return (0);
-	map->filename = "maps/test.cub";
-	map->tab = map_tab(map->filename);
-	map->width = max_width(map->tab);
-	map->height = max_height(map->tab);
-	printf("height: %d\n", max_height(map->tab));
-	printf("width: %d\n", max_width(map->tab));
-	printf("nb of lines: %d\n", count_map_line(filename));
-	printf("---CUB3D MAP---\n");
-	tab = map_tab(filename);
-	i = 0;
-	while (tab[i])
-		printf("%s", tab[i++]);
-	printf("\nIs the good extension ?\n");
-	if (!cub_ext(filename))
-		printf("error: absolutely not.\n");
-	else
-		printf("Yeah that's okay.\n");
-	flood_fill(map, 10, 2);
-	return (0);
 }
