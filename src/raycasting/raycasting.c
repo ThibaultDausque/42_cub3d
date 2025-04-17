@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: prosset <prosset@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:34:03 by prosset           #+#    #+#             */
-/*   Updated: 2025/04/15 15:47:24 by prosset          ###   ########.fr       */
+/*   Updated: 2025/04/17 12:44:42 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,24 @@ void	raycasting(t_data *data)
 	data->ray.dirY = -1;
 	data->ray.x = data->player.x;
 	data->ray.y = data->player.y;
+	data->ray.mapX = (int)data->ray.x;
+	data->ray.mapY = (int)data->ray.y;
 	hit = 0;
-	while (!hit && data->ray.y > 0 && data->ray.x > 0)
+	deltaDist(data);
+	sideDist(data);
+	while (!hit)
 	{
-		data->ray.x += data->ray.dirX * 0.01;
-		data->ray.y += data->ray.dirY * 0.01;
-		if (horizont_lines(data))
-			hit = 1;
-		if (vertical_lines(data))
+		if (data->ray.sdistX < data->ray.sdistY)
+		{
+			data->ray.sdistX += data->ray.ddistX;
+			data->ray.mapX += data->ray.stepX;
+		}
+		else
+		{
+			data->ray.sdistY += data->ray.ddistY;
+			data->ray.mapY += data->ray.stepY;
+		}
+		if (data->map.tab[data->ray.mapX][data->ray.mapY] == '1')
 			hit = 1;
 	}
 	X = data->player.x - data->ray.x;
@@ -55,9 +65,9 @@ void	raycasting(t_data *data)
 		proj_length = (64 / length) * 277;
 	if (proj_length > HEIGHT)
 		proj_length = HEIGHT;
-	
+
 	printf("%f %f\n", length, proj_length);
-	
+
 	img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	int i = 0;
@@ -69,11 +79,49 @@ void	raycasting(t_data *data)
 	}
 }
 
+void	deltaDist(t_data *data)
+{
+	if (data->ray.dirX == 0)
+		data->ray.ddistX = 2147483647;
+	else
+		data->ray.ddistX = abs(1 / data->ray.dirX);
+
+	if (data->ray.dirY == 0)
+		data->ray.ddistY = 2147483647;
+	else
+		data->ray.ddistY = abs(1 / data->ray.dirY);
+
+}
+
+void	sideDist(t_data *data)
+{
+	if (data->ray.dirX < 0)
+	{
+		data->ray.sdistX = (data->player.x - data->ray.mapX) * data->ray.ddistX;
+		data->ray.stepX = -1;
+	}
+	else
+	{
+		data->ray.sdistX = (data->ray.mapX + 1.0 - data->player.x) * data->ray.ddistX;
+		data->ray.stepX = 1;
+	}
+	if (data->ray.dirY < 0)
+	{
+		data->ray.sdistY = (data->player.y - data->ray.mapY) * data->ray.ddistY;
+		data->ray.stepY = -1;
+	}
+	else
+	{
+		data->ray.sdistY = (data->ray.mapY + 1.0 - data->player.y) * data->ray.ddistY;
+		data->ray.stepY = 1;
+	}
+}
+
 int	horizont_lines(t_data *data)
 {
 	int	i;
 	int	j;
-	
+
 	i = (int)(data->ray.y);
 	j = (int)(data->ray.x);
 	if (data->map.tab[i][j] == '1')
@@ -88,7 +136,7 @@ int	vertical_lines(t_data *data)
 {
 	int	i;
 	int	j;
-	
+
 	i = (int)(data->ray.y);
 	j = (int)(data->ray.x);
 	if (data->map.tab[i][j - 1] == 1)

@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:40:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/17 10:59:17 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/17 12:38:31 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,14 @@ typedef struct s_ray
 	float	y;
 	float	dirX;
 	float	dirY;
+	float	ddistX;
+	float	ddistY;
+	float	sdistX;
+	float	sdistY;
+	int		stepX;
+	int		stepY;
+	int		mapX;
+	int		mapY;
 } t_ray;
 
 typedef struct s_data
@@ -82,13 +90,14 @@ int	max_height(char **map);
 void	create_data(t_data *data, char **av);
 
 /*    free.c    */
-void    ft_free_tab(char **tab);
-void    ft_free_all(t_data *data);
+void	ft_free_tab(char **tab);
+void	ft_free_all(t_data *data);
 
 /*    raycasting.c    */
-void    raycasting(t_data *data);
-int        vertical_lines(t_data *data);
-int        horizont_lines(t_data *data);
-
+void	raycasting(t_data *data);
+int		vertical_lines(t_data *data);
+int		horizont_lines(t_data *data);
+void	deltaDist(t_data *data);
+void	sideDist(t_data *data);
 
 #endif
