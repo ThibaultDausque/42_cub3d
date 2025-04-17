@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:40:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/16 09:52:26 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/17 10:59:17 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <math.h>
+# include "../mlx_linux/mlx.h"
 # include "libft.h"
 # include "get_next_line.h"
+# include "ft_printf.h"
 
 # define PIXEL 64
 # define WIDTH 320
@@ -74,5 +77,18 @@ char	**map_tab(char *filename);
 int	ft_strcmp(const char *s1, const char *s2);
 int	max_width(char **map);
 int	max_height(char **map);
+
+/*    create.c    */
+void	create_data(t_data *data, char **av);
+
+/*    free.c    */
+void    ft_free_tab(char **tab);
+void    ft_free_all(t_data *data);
+
+/*    raycasting.c    */
+void    raycasting(t_data *data);
+int        vertical_lines(t_data *data);
+int        horizont_lines(t_data *data);
+
 
 #endif

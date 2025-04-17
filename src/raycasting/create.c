@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: prosset <prosset@student.42.fr>            +#+  +:+       +#+        */
+/*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 14:19:28 by prosset           #+#    #+#             */
-/*   Updated: 2025/04/15 14:28:27 by prosset          ###   ########.fr       */
+/*   Updated: 2025/04/17 11:04:50 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ char	**fill_tab(char **tab)
 		i++;
 	}
 	return (tab);
+}
+
+int	ft_is_endl(char *str)
+{
+	int		i;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 char	**get_map(int fd)
@@ -63,6 +77,11 @@ int	is_player(char c)
 	return (c == 'N' || c == 'S' || c == 'E' || c == 'W');
 }
 
+int	is_map(char c)
+{
+	return (c == 'N' || c == 'S' || c == 'E' || c == 'W' || c == '0' || c == '1' || c == ' ');
+}
+
 void	player_pos(t_data *data)
 {
 	int	i;
@@ -72,12 +91,13 @@ void	player_pos(t_data *data)
 	while (data->map.tab[i])
 	{
 		j = 0;
-		while (data->map.tab[i][j])
+		while (is_map(data->map.tab[i][j]))
 		{
 			if (is_player(data->map.tab[i][j]))
 			{
 				data->player.x = j + 0.5;
 				data->player.y = i + 0.5;
+				printf("%f %f\n", data->player.x, data->player.y);
 				return ;
 			}
 			j++;
@@ -86,8 +106,11 @@ void	player_pos(t_data *data)
 	}
 }
 
-void	create_data(t_data *data, int fd)
+void	create_data(t_data *data, char **av)
 {
+	int fd;
+
+	fd = open(av[1], O_RDONLY);
 	data->map.tab = get_map(fd);
 	player_pos(data);
 }

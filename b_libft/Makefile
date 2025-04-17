@@ -6,7 +6,7 @@
 #    By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/11 11:03:14 by tdausque          #+#    #+#              #
-#    Updated: 2025/04/15 10:12:38 by tdausque         ###   ########.fr        #
+#    Updated: 2025/04/17 10:29:37 by tdausque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ PRINTF_SRCS = ft_printf/ft_print_char.c \
 			ft_printf/ft_print_hex.c \
 			ft_printf/ft_print_nbr.c \
 			ft_printf/ft_print_str.c \
+			ft_printf/ft_print_ptr.c \
 			ft_printf/ft_print_unbr.c \
 			ft_printf/ft_printf.c
 

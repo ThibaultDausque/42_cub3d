@@ -6,7 +6,7 @@
 #    By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 11:32:53 by tdausque          #+#    #+#              #
-#    Updated: 2025/04/16 09:48:14 by tdausque         ###   ########.fr        #
+#    Updated: 2025/04/17 10:49:22 by tdausque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,9 @@ PARSE_SRC = src/parsing/parse.c \
 
 UTILS_SRC = src/utils/utils.c
 
-RAYCAST_SRC = 	create.c \
-				free.c \
-				raycasting.c
+RAYCAST_SRC = 	src/raycasting/create.c \
+				src/raycasting/free.c \
+				src/raycasting/raycasting.c
 
 SRCS = $(PARSE_SRC) $(UTILS_SRC) $(MAIN_SRC) $(RAYCAST_SRC)
 OBJS_DIR = objs
@@ -35,7 +35,7 @@ RM = rm -f
 BAR_LENGTH := 50
 TOTAL_FILES := $(words $(SRCS))
 COMPILED_FILES := 0
-NAME = cub3d
+NAME = cub3D
 
 define progress_bar
 	$(eval COMPILED_FILES=$(shell echo $$(($(COMPILED_FILES) + 1))))
@@ -50,12 +50,13 @@ endef
 all : $(NAME)
 
 $(NAME) : $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(INCLUDES) -o $(NAME) $(LIB)
+	@$(CC) $(CFLAGS) $(OBJS) $(INCLUDES) -Lmlx_linux -lmlx -lXext -lX11 -lm -o $(NAME) $(LIB)
 
 $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(@D)
 	$(call progress_bar)
 	@cd b_libft && make -s
+	@cd mlx_linux && make -s
 	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean :
