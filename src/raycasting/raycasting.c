@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 13:34:03 by prosset           #+#    #+#             */
-/*   Updated: 2025/04/17 12:44:42 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:01:41 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,20 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	raycasting(t_data *data)
+void	raycasting(t_data *data, int x, t_img *img)
 {
-	//float	planeX = 0;
-	//float	planeY = 0.6;
+	float	planeX = 0;
+	float	planeY = 0.6;
 	int		hit;
-	float	length;
-	float	X;
-	float	Y;
-	float	proj_length;
-	t_img	img;
+	float	perpWallDist;
+	int		side;
+	float	cameraX;
 
 	data->ray.dirX = 0;
 	data->ray.dirY = -1;
+	cameraX = 2 * x / WIDTH - 1;
+	data->ray.dirX = data->ray.dirX + planeX * cameraX;
+	data->ray.dirY = data->ray.dirY + planeY * cameraX;
 	data->ray.x = data->player.x;
 	data->ray.y = data->player.y;
 	data->ray.mapX = (int)data->ray.x;
@@ -47,34 +48,49 @@ void	raycasting(t_data *data)
 		{
 			data->ray.sdistX += data->ray.ddistX;
 			data->ray.mapX += data->ray.stepX;
+			side = 0;
 		}
 		else
 		{
 			data->ray.sdistY += data->ray.ddistY;
 			data->ray.mapY += data->ray.stepY;
+			side = 1;
 		}
-		if (data->map.tab[data->ray.mapX][data->ray.mapY] == '1')
+		if (data->map.tab[data->ray.mapY][data->ray.mapX] == '1')
 			hit = 1;
 	}
-	X = data->player.x - data->ray.x;
-	Y = data->player.y - data->ray.y;
-	length = hypot(X, Y) * cos(0) * 64;
-	if (length == 0)
-		proj_length = HEIGHT;
+	if (side == 0)
+		perpWallDist = (data->ray.sdistX - data->ray.ddistX);
 	else
-		proj_length = (64 / length) * 277;
-	if (proj_length > HEIGHT)
-		proj_length = HEIGHT;
+		perpWallDist = (data->ray.sdistY - data->ray.ddistY);
 
-	printf("%f %f\n", length, proj_length);
+	printf("%f\n", perpWallDist);
+	int	lineheight = (int)(HEIGHT / perpWallDist);
+	printf("%d\n", lineheight);
+	int drawStart = -lineheight / 2 + HEIGHT / 2;
+    if(drawStart < 0)
+		drawStart = 0;
+    int drawEnd = lineheight / 2 + HEIGHT / 2;
+    if(drawEnd >= HEIGHT)
+		drawEnd = HEIGHT - 1;
+	// X = data->player.x - data->ray.x;
+	// Y = data->player.y - data->ray.y;
+	// length = hypot(X, Y) * cos(0) * 64;
+	// if (length == 0)
+	// 	proj_length = HEIGHT;
+	// else
+	// 	proj_length = (64 / length) * 277;
+	// if (proj_length > HEIGHT)
+	// 	proj_length = HEIGHT;
 
-	img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	// printf("%f %f\n", length, proj_length);
+
+
 	int i = 0;
-	while (i < (int)proj_length)
+	while (drawStart + i < drawEnd)
 	{
-		my_mlx_pixel_put(&img, WIDTH / 2, i + (HEIGHT / 2) - proj_length / 2, 0x00FF0000);
-		mlx_put_image_to_window(data->mlx, data->win, img.img, 0, 0);
+		my_mlx_pixel_put(img, x, drawStart + i, 0x00FF0000);
+		mlx_put_image_to_window(data->mlx, data->win, img->img, 0, 0);
 		i++;
 	}
 }
@@ -82,14 +98,14 @@ void	raycasting(t_data *data)
 void	deltaDist(t_data *data)
 {
 	if (data->ray.dirX == 0)
-		data->ray.ddistX = 2147483647;
+		data->ray.ddistX = 2147483647.0;
 	else
-		data->ray.ddistX = abs(1 / data->ray.dirX);
+		data->ray.ddistX = fabsf(1 / data->ray.dirX);
 
 	if (data->ray.dirY == 0)
-		data->ray.ddistY = 2147483647;
+		data->ray.ddistY = 2147483647.0;
 	else
-		data->ray.ddistY = abs(1 / data->ray.dirY);
+		data->ray.ddistY = fabsf(1 / data->ray.dirY);
 
 }
 

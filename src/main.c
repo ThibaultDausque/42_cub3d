@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:39:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/17 11:02:39 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/17 16:00:46 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,14 @@ int	ft_redcross(t_data *data);
 int	main(int ac, char **av)
 {
 	t_data	data;
+	t_img	img;
+	int		x;
 
 	(void)ac;
 	create_data(&data, av);
 	int i = 0;
 	while (data.map.tab[i])
 	{
-		printf("coucou\n");
 		printf("%s\n", data.map.tab[i]);
 		i++;
 	}
@@ -70,7 +71,14 @@ int	main(int ac, char **av)
 	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3d");
 	mlx_hook(data.win, 17, 1L << 2, ft_redcross, &data);
 	mlx_hook(data.win, 2, 1L << 0, ft_close, &data);
-	raycasting(&data);
+	img.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	x = 0;
+	while (x < WIDTH)
+	{
+		raycasting(&data, x, &img);
+		x++;
+	}
 	mlx_loop(data.mlx);
 	ft_free_all(&data);
 }
