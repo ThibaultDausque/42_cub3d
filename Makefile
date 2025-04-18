@@ -6,13 +6,15 @@
 #    By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/04/14 11:32:53 by tdausque          #+#    #+#              #
-#    Updated: 2025/04/17 10:49:22 by tdausque         ###   ########.fr        #
+#    Updated: 2025/04/18 13:34:17 by tdausque         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
 
 MAIN_SRC = src/main.c
+
+GAME_SRC = src/game/game.c
 
 PARSE_SRC = src/parsing/parse.c \
 		src/parsing/extension.c \
@@ -24,7 +26,7 @@ RAYCAST_SRC = 	src/raycasting/create.c \
 				src/raycasting/free.c \
 				src/raycasting/raycasting.c
 
-SRCS = $(PARSE_SRC) $(UTILS_SRC) $(MAIN_SRC) $(RAYCAST_SRC)
+SRCS = $(PARSE_SRC) $(UTILS_SRC) $(GAME_SRC) $(MAIN_SRC) $(RAYCAST_SRC)
 OBJS_DIR = objs
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 CFLAGS = -Wall -Wextra -Werror -g

@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:39:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/17 16:00:46 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/18 13:43:48 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,17 @@ int	main(int ac, char **av)
 		return (0);
 	}
 	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3d");
-	mlx_hook(data.win, 17, 1L << 2, ft_redcross, &data);
-	mlx_hook(data.win, 2, 1L << 0, ft_close, &data);
 	img.img = mlx_new_image(data.mlx, WIDTH, HEIGHT);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	x = 0;
 	while (x < WIDTH)
 	{
+		data.player.angle = M_PI / 6 + M_PI / 2 - (x * M_PI / 3) / WIDTH;
 		raycasting(&data, x, &img);
 		x++;
 	}
+	mlx_hook(data.win, 17, 1L << 2, ft_redcross, &data);
+	mlx_hook(data.win, 2, 1L << 0, ft_close, &data);
 	mlx_loop(data.mlx);
 	ft_free_all(&data);
 }
@@ -87,6 +88,7 @@ int	ft_close(int keycode, t_data *data)
 {
 	if (keycode == 65307)
 		mlx_loop_end(data->mlx);
+	key_handler(keycode, data);
 	return (0);
 }
 

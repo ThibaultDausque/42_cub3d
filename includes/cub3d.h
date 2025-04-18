@@ -6,7 +6,7 @@
 /*   By: tdausque <tdausque@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/14 09:40:11 by tdausque          #+#    #+#             */
-/*   Updated: 2025/04/17 16:00:42 by tdausque         ###   ########.fr       */
+/*   Updated: 2025/04/18 14:01:05 by tdausque         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ typedef struct s_player
 {
 	float	x;
 	float	y;
+	float	dirX;
+	float	dirY;
+	float	angle;
 } t_player;
 
 typedef struct s_ray
@@ -62,6 +65,8 @@ typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
+	int			textH;
+	int			textW;
 	t_map		map;
 	t_player	player;
 	t_ray		ray;
@@ -85,6 +90,9 @@ char	**map_tab(char *filename);
 int	ft_strcmp(const char *s1, const char *s2);
 int	max_width(char **map);
 int	max_height(char **map);
+
+//////GAME//////
+void	key_handler(int keycode, t_data *data);
 
 /*    create.c    */
 void	create_data(t_data *data, char **av);

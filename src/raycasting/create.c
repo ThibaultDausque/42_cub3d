@@ -113,4 +113,7 @@ void	create_data(t_data *data, char **av)
 	fd = open(av[1], O_RDONLY);
 	data->map.tab = get_map(fd);
 	player_pos(data);
+	data->player.dirX = 0;
+	data->player.dirY = -1;
+	data->player.angle = M_PI / 2;
 }
